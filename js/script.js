@@ -57,7 +57,30 @@ $('#design').on('change', function(event){
 });
 
 /*
-
-  Activities Checkboxes
-
+Activities Checkboxes
+Append Total Cost to the bottom of the checkbox fieldset
+Add an event listener to see if the button is checked, then grey out conflicting times.
 */
+let grandTotal = 0;
+
+/* Debugging event cost
+let test = "$200"
+let parseTest = test.replace("$", "");
+let parseTestTest= parseInt(parseTest);
+console.log(typeof parseTestTest);
+*/
+$('.activities').append('<span>Total Cost: <span>').append(grandTotal);
+
+
+$('.activities input[type=checkbox]').change(function(event){
+  let checked = $(this).is(":checked");
+  let revisedStringCost = $(this).attr("data-cost").replace("$", "")
+  let revisedNum = parseInt(revisedStringCost);
+  if (checked) {
+    grandTotal += revisedNum;
+    console.log(typeof grandTotal);
+  } else {
+    grandTotal -= revisedNum;
+  }
+  $('span').text("Total Cost: $").append(grandTotal);
+});
