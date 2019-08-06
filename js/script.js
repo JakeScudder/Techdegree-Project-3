@@ -69,7 +69,7 @@ let parseTest = test.replace("$", "");
 let parseTestTest= parseInt(parseTest);
 console.log(typeof parseTestTest);
 */
-$('.activities').append('<span>Total Cost: <span>').append(grandTotal);
+$('.activities').append('<span id="total-cost">Total Cost: <span>');
 
 
 $('.activities input[type=checkbox]').change(function(event){
@@ -78,9 +78,23 @@ $('.activities input[type=checkbox]').change(function(event){
   let revisedNum = parseInt(revisedStringCost);
   if (checked) {
     grandTotal += revisedNum;
-    console.log(typeof grandTotal);
   } else {
     grandTotal -= revisedNum;
   }
-  $('span').text("Total Cost: $").append(grandTotal);
+  $('#total-cost').text("Total Cost: $").append(grandTotal);
+
+  let dayAndTime = $(this).attr("data-day-and-time");
+
+
+  let actSection = $('.activities label')
+  for (let i = 0; i < actSection.length; i++) {
+    console.log(actSection[i])
+    let loopTime = $(actSection[i]).attr("data-day-and-time");
+    console.log(loopTime);
+  }
+
+
+
+
+
 });
