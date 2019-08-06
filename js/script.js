@@ -3,7 +3,7 @@
 TechDegree Project 3 - Interactive form
 Javascript file mostly implemented using jQuery
 
-*********************************/
+**********************************/
 
 /*
 Web page loads with focus on the Name input field
@@ -56,24 +56,34 @@ $('#design').on('change', function(event){
   }
 });
 
+
+/**********************************
+Activities Section
+***********************************/
 /*
-Activities Checkboxes
-Append Total Cost to the bottom of the checkbox fieldset
-Add an event listener to see if the button is checked, then grey out conflicting times.
+Debugging the event cost
+
+let test = "$200"
+let replaceTest = test.replace("$", "");
+let parseTest= parseInt(replaceTest);
+console.log(typeof parseTest);
+
 */
+
 let grandTotal = 0;
 
-/* Debugging event cost
-let test = "$200"
-let parseTest = test.replace("$", "");
-let parseTestTest= parseInt(parseTest);
-console.log(typeof parseTestTest);
-*/
+//Append Total Cost to the bottom of the checkbox fieldset
 $('.activities').append('<span id="total-cost">Total Cost: <span>');
 
 
+/*
+Activities Checkboxes
+Retrieving the cost attribute and adding them together to get the Grand Total
+*/
+
 $('.activities input[type=checkbox]').change(function(event){
   let checked = $(this).is(":checked");
+  console.log(checked);
   let revisedStringCost = $(this).attr("data-cost").replace("$", "")
   let revisedNum = parseInt(revisedStringCost);
   if (checked) {
@@ -83,18 +93,29 @@ $('.activities input[type=checkbox]').change(function(event){
   }
   $('#total-cost').text("Total Cost: $").append(grandTotal);
 
-  let dayAndTime = $(this).attr("data-day-and-time");
-
-
-  let actSection = $('.activities label')
+  /*
+    Retrieve the day and time of the checked checkedActivityTime
+    Run a for loop through the inputs in the activities Section
+    Check to see that the loop time is equal to the checked activity time and also if input being checked is not the same as the element in the for loop:
+      Then the element in the for loop is disabled.
+      When the box is unchecked, the input is enabled once more.
+  */
+  let checkedActivityTime = $(this).attr("data-day-and-time");
+  console.log(checkedActivityTime)
+  let actSection = $('.activities label input')
   for (let i = 0; i < actSection.length; i++) {
-    console.log(actSection[i])
     let loopTime = $(actSection[i]).attr("data-day-and-time");
     console.log(loopTime);
+    if (loopTime === checkedActivityTime && event.target !== actSection[i]) {
+      if (checked) {
+        $(actSection[i]).prop('disabled', true);
+      } else {
+        $(actSection[i]).prop('disabled', false);
+      }
+    }
   }
-
-
-
-
-
 });
+
+/**********************************
+Payment Section
+***********************************/
