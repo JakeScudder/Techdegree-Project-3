@@ -83,7 +83,6 @@ Retrieving the cost attribute and adding them together to get the Grand Total
 
 $('.activities input[type=checkbox]').change(function(event){
   let checked = $(this).is(":checked");
-  console.log(checked);
   let revisedStringCost = $(this).attr("data-cost").replace("$", "")
   let revisedNum = parseInt(revisedStringCost);
   if (checked) {
@@ -101,11 +100,10 @@ $('.activities input[type=checkbox]').change(function(event){
       When the box is unchecked, the input is enabled once more.
   */
   let checkedActivityTime = $(this).attr("data-day-and-time");
-  console.log(checkedActivityTime)
   let actSection = $('.activities label input')
+
   for (let i = 0; i < actSection.length; i++) {
     let loopTime = $(actSection[i]).attr("data-day-and-time");
-    console.log(loopTime);
     if (loopTime === checkedActivityTime && event.target !== actSection[i]) {
       if (checked) {
         $(actSection[i]).prop('disabled', true);
