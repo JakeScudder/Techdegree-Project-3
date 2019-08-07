@@ -15,6 +15,8 @@ $(document).ready(function() {
   $('#name').focus();
   $('#other-title').hide();
   $('#colors-js-puns').hide();
+  $("#paypalDiv").hide();
+  $("#bitcoinDiv").hide();
 });
 
 /*Javascript to show other Job Role text input when selected, or rehide it if it is de-selected.
@@ -116,4 +118,34 @@ $('.activities input[type=checkbox]').change(function(event){
 
 /**********************************
 Payment Section
+***********************************/
+
+$("#payment option[value='select method']").hide();
+
+
+$('#payment').on('change', function(event) {
+  if ($(this).val() === "select method") {
+    $("#credit-card").show();
+    $("#paypalDiv").hide();
+    $("#bitcoinDiv").hide();
+  }
+  if ($(this).val() === "credit card") {
+    $("#credit-card").show();
+    $("#paypalDiv").hide()
+    $("#bitcoinDiv").hide()
+  }
+  if ($(this).val() === "paypal") {
+    $("#paypalDiv").show();
+    $("#credit-card").hide();
+    $("#bitcoinDiv").hide()
+  }
+  if ($(this).val() === "bitcoin") {
+    $("#bitcoinDiv").show()
+    $("#paypalDiv").hide()
+    $("#credit-card").hide();
+  }
+});
+
+/**********************************
+Validation Functions
 ***********************************/
