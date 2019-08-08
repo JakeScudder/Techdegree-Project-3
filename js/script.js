@@ -255,7 +255,7 @@ function errorMessage() {
     $('#cvv-length-span').hide();
 }
 
-//Non-working event listener
+//Non-working event listener to show Tooltip
 $('form').on('input', function(event){
   errorMessage(event);
   console.log(event);
