@@ -154,7 +154,7 @@ All are hidden until they are tested
 //Attaching error messages to their input fields and then hiding them
 
 const $nameInput = $('#name');
-console.log($nameInput.val());
+console.log($nameInput[0]);
 $($nameInput).after('<span id="nameSpan" class="tooltip">Please Type Your Name</span>');
 $('#nameSpan').hide();
 
@@ -258,7 +258,7 @@ Validation Function Calls
 */
 
 
-$nameInput.addEventListener("change", validName($nameInput.val());
+$nameInput[0].addEventListener("input", validName($nameInput.val()));
 
 
 //Non-working validation function for form submission
