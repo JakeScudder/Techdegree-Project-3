@@ -255,13 +255,13 @@ function errorMessage() {
     $('#cvv-length-span').hide();
 }
 
-//Non-functional event listener
+//Non-working event listener
 $('form').on('input', function(event){
   errorMessage(event);
   console.log(event);
 });
 
-//Non-function validation function for form submission
+//Non-working validation function for form submission
 function masterValidator () {
   validName();
   validEmail();
@@ -271,6 +271,8 @@ function masterValidator () {
         validCreditNumber();
         validZip();
         validCvv();
+    } else {
+      return;
     }
   });
 }
