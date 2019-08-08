@@ -1,4 +1,4 @@
-/* ================================= 
+/* =================================
   Base Element Styles
 ==================================== */
 
@@ -17,11 +17,11 @@ button {
 body {
   font: 1em/1.5;
   color: rgba(6, 49, 68, 0.9);
-	background: #CDE0FB;
+	background: #5fb15e;
 }
 
 header {
-	text-align: center;  
+	text-align: center;
 }
 
 h1 {
@@ -33,14 +33,30 @@ h1 {
 a {
   text-decoration: none;
 }
+/* =================================
+  Error Tooltips
+==================================== */
+#activity-span {
+  margin-top: 10px;
+  box-sizing: border-box;
+}
 
-/* ================================= 
+
+
+
+
+
+
+
+
+
+/* =================================
   Form Element Styles
 ==================================== */
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #9BBEEF;
+	background: #2c87d4;
 	border: 2px solid rgba(8, 63, 87, 0.7);
 	border-radius: 3px;
 }
@@ -58,7 +74,7 @@ fieldset {
 
 legend,
 button {
-	font-size: 1.25em;	
+	font-size: 1.25em;
 }
 
 legend {
@@ -77,12 +93,13 @@ legend {
 label {
 	color: #000;
 	display: block;
+  margin-top: 10px;
 	margin-bottom: .5em;
 }
 
 input,
 select {
-	margin-bottom: 1.125em;	
+	margin-bottom: .75em;
 }
 
 input {
@@ -121,13 +138,13 @@ button:hover {
 	background: #6F9DDC;
 }
 
-input, 
-select, 
+input,
+select,
 option {
 	font-family: 'roboto', sans-serif;
 }
 
-/* ================================= 
+/* =================================
   Page Styles
 ==================================== */
 
@@ -149,7 +166,7 @@ option {
 	margin-top: 1.25em;
 }
 
-/* ================================= 
+/* =================================
   Helper Classes
 ==================================== */
 
@@ -163,7 +180,7 @@ option {
   clear: both;
 }
 
-/* ================================= 
+/* =================================
   Media Queries
 ==================================== */
 
