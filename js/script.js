@@ -153,58 +153,71 @@ All are hidden until they are tested
 
 //Attaching error messages to their input fields and then hiding them
 
-const nameInput = $('#name');
+const $nameInput = $('#name');
 $(nameInput).after('<span id="nameSpan" class="tooltip">Please Type Your Name</span>');
 $('#nameSpan').hide();
 
 
-const emailInput = $('#mail');
+const $emailInput = $('#mail');
 $(emailInput).after('<span id="emailSpan" class="tooltip">Please Type A Valid Email</span>');
 $('#emailSpan').hide();
 
 
-const oneActivity = $('.activities');
+const $oneActivity = $('.activities');
 $('.register').after('<span id="activity-span">Please Check At Least One Box</span>');
 $('#activity-span').hide();
 
 
-const creditNumber = $('#cc-num');
+const $creditNumber = $('#cc-num');
 $(creditNumber).after('<span id="credit-span">Credit Card Number Cannot Be Blank</span>');
 $(creditNumber).after('<span id="credit-length">Credit Card Number Must Be 13-16 Digits Long</span>');
 $('#credit-span').hide();
 $('#credit-length').hide();
 
 
-const creditZip = $('#zip');
+const $creditZip = $('#zip');
 $(creditZip).after('<span id="zip-span">Zip Code Cannot Be Blank</span>');
 $(creditZip).after('<span id="zip-length">Zip Code Must Be 5 Digits</span>');
 $('#zip-span').hide();
 $('#zip-length').hide();
 
 
-const cvvCode = $('#cvv');
+const $cvvCode = $('#cvv');
 $(cvvCode).after('<span id="cvv-span">CVV Code Must Be 3 Digits</span>');
 $(cvvCode).after('<span id="cvv-length">CVV Code Must Be 3 Digits</span>');
 $('#cvv-span').hide();
 $('#cvv-length').hide();
 
+
 /*
 Validation functions
 */
+
+console.log(nameInput.val())
+
 function validName (username) {
-  return /\S+/.test(username);
+  if ($nameInput.val() === "") {
+    $('#nameSpan').show();
+  } else {
+    $('#nameSpan').hide();
+  }
 }
 
 function validEmail (email) {
+  if (!validEmail()) {
+    $('#emailSpan').show();
+  } else {
+    $('#emailSpan').hide();
+  }
   return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
 }
 
 function validActivity (activity) {
-  $('.activities').click(function(event){
-    if ($('.activities input').is(':checked')) {
-      return activity;
-    }
-  });
+  if (grandTotal = 0) {
+    return false;
+  } else {
+    return;
+  }
 }
 
 function validCreditNumber (credit) {
@@ -219,20 +232,13 @@ function validCvv (cvv) {
   return /^\d{3}$/.test(cvv);
 }
 
+
 //Function to show tooltips if needed
 //Then hide them if they are correct
 
-function errorMessage() {
-  if (!validName()) {
-    $('#nameSpan').show();
-  } else {
-    $('#nameSpan').hide();
-  }
-  if (!validEmail()) {
-    $('#emailSpan').show();
-  } else {
-    $('#emailSpan').hide();
-  }
+function errorMessage(input, inputField ) {
+
+
   if (!validActivity()) {
     $('#activity-span').show();
   } else {
@@ -255,22 +261,16 @@ function errorMessage() {
     $('#cvv-length-span').hide();
 }
 
-//Non-working event listener to show Tooltip
-$('form').on('input', function(event){
-  errorMessage(event);
-  console.log(event);
-});
-
 //Non-working validation function for form submission
 function masterValidator () {
-  validName();
-  validEmail();
-  validActivity();
+  validName($nameInput);
+  validEmail($emailInput);
+  validActivity($oneActivity);
   $('#payment').on('change', function(event) {
     if ($(this).val() === "credit card") {
-        validCreditNumber();
-        validZip();
-        validCvv();
+        validCreditNumber($creditNumber);
+        validZip($creditZip);
+        validCvv($cvvCode);
     } else {
       return;
     }
