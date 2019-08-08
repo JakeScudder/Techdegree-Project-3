@@ -154,12 +154,13 @@ All are hidden until they are tested
 //Attaching error messages to their input fields and then hiding them
 
 const $nameInput = $('#name');
-$(nameInput).after('<span id="nameSpan" class="tooltip">Please Type Your Name</span>');
+console.log($nameInput.val());
+$($nameInput).after('<span id="nameSpan" class="tooltip">Please Type Your Name</span>');
 $('#nameSpan').hide();
 
 
 const $emailInput = $('#mail');
-$(emailInput).after('<span id="emailSpan" class="tooltip">Please Type A Valid Email</span>');
+$($emailInput).after('<span id="emailSpan" class="tooltip">Please Type A Valid Email</span>');
 $('#emailSpan').hide();
 
 
@@ -169,22 +170,22 @@ $('#activity-span').hide();
 
 
 const $creditNumber = $('#cc-num');
-$(creditNumber).after('<span id="credit-span">Credit Card Number Cannot Be Blank</span>');
-$(creditNumber).after('<span id="credit-length">Credit Card Number Must Be 13-16 Digits Long</span>');
+$($creditNumber).after('<span id="credit-span">Credit Card Number Cannot Be Blank</span>');
+$($creditNumber).after('<span id="credit-length">Credit Card Number Must Be 13-16 Digits Long</span>');
 $('#credit-span').hide();
 $('#credit-length').hide();
 
 
 const $creditZip = $('#zip');
-$(creditZip).after('<span id="zip-span">Zip Code Cannot Be Blank</span>');
-$(creditZip).after('<span id="zip-length">Zip Code Must Be 5 Digits</span>');
+$($creditZip).after('<span id="zip-span">Zip Code Cannot Be Blank</span>');
+$($creditZip).after('<span id="zip-length">Zip Code Must Be 5 Digits</span>');
 $('#zip-span').hide();
 $('#zip-length').hide();
 
 
 const $cvvCode = $('#cvv');
-$(cvvCode).after('<span id="cvv-span">CVV Code Must Be 3 Digits</span>');
-$(cvvCode).after('<span id="cvv-length">CVV Code Must Be 3 Digits</span>');
+$($cvvCode).after('<span id="cvv-span">CVV Code Must Be 3 Digits</span>');
+$($cvvCode).after('<span id="cvv-length">CVV Code Must Be 3 Digits</span>');
 $('#cvv-span').hide();
 $('#cvv-length').hide();
 
@@ -193,85 +194,88 @@ $('#cvv-length').hide();
 Validation functions
 */
 
-console.log(nameInput.val())
 
 function validName (username) {
-  if ($nameInput.val() === "") {
-    $('#nameSpan').show();
+  if (username !== "") {
+    return true;
   } else {
-    $('#nameSpan').hide();
+    $('#nameSpan').show();
+    return false;
   }
 }
 
+
 function validEmail (email) {
-  if (!validEmail()) {
-    $('#emailSpan').show();
+  let testEmail = /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+  if (testEmail) {
+    return true;
   } else {
-    $('#emailSpan').hide();
+    $('#emailSpan').show();
+    return false;
   }
-  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
 }
 
 function validActivity (activity) {
-  if (grandTotal = 0) {
-    return false;
+  if (grandTotal !== 0) {
+    return true;
   } else {
-    return;
+    $('#activity-span').show();
+    return false;
   }
 }
 
 function validCreditNumber (credit) {
-  return /^\d{13,16}$/.test(credit);
+  let creditTest = /^\d{13,16}$/.test(credit);
+  if (creditTest) {
+    return true;
+  } else {
+    $('#credit-length-span').show();
+    return false;
+  }
+
 }
 
 function validZip (zip) {
-  return /^\d{5}$/.test(zip);
+  let zipTest = /^\d{5}$/.test(zip);
+  if (validZip()) {
+    return true;
+  } else {
+    $('#zip-length-span').show();
+    return false;
+  }
 }
 
 function validCvv (cvv) {
-  return /^\d{3}$/.test(cvv);
-}
-
-
-//Function to show tooltips if needed
-//Then hide them if they are correct
-
-function errorMessage(input, inputField ) {
-
-
-  if (!validActivity()) {
-    $('#activity-span').show();
+  let cvvTest = /^\d{3}$/.test(cvv);
+  if (cvvTest) {
+    return true;
   } else {
-    $('#activity-span').hide();
-  }
-
-  if (!validCreditNumber()) {
-    $('#credit-length-span').show();
-  } else {
-    $('#credit-length-span').hide();
-  }
-  if (!validZip()) {
-    $('#zip-length-span').show();
-  } else {
-    $('#zip-length-span').hide();
-  }
-  if (!validCvv()) {
     $('#cvv-length-span').show();
-  } else
-    $('#cvv-length-span').hide();
+  }
 }
+/*
+Validation Function Calls
+*/
+
+
+$nameInput.addEventListener("change", validName($nameInput.val());
+
 
 //Non-working validation function for form submission
 function masterValidator () {
-  validName($nameInput);
-  validEmail($emailInput);
-  validActivity($oneActivity);
+  let validArray = [
+  validName($nameInput.val()),
+  validEmail($emailInput.val()),
+  validActivity($oneActivity.val())]
+  let creditArray = [
+  validCreditNumber($creditNumber.val()),
+  validZip($creditZip.val()),
+  validCvv($cvvCode.val())];
   $('#payment').on('change', function(event) {
     if ($(this).val() === "credit card") {
-        validCreditNumber($creditNumber);
-        validZip($creditZip);
-        validCvv($cvvCode);
+      Array.prototype.push.apply(validArray, creditArray);
     } else {
+
       return;
     }
   });
