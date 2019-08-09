@@ -39,7 +39,7 @@ https://www.websparrow.org/web/add-and-remove-options-in-select-using-jquery
 
 */
 
-$("#colors-js-puns option[value='select method']").hide();
+$("#design option[value='select theme']").hide();
 
 $('#design').on('change', function(event){
   $('#colors-js-puns').show();
@@ -125,7 +125,7 @@ $('.activities input[type=checkbox]').change(function(event){
 Payment Section
 ***********************************/
 
-$("#payment option[value='select method']").hide();
+$("#payment option[value='select method']").remove();
 
 
 $('#payment').on('change', function(event) {
@@ -159,7 +159,7 @@ All are hidden until they are tested
 //Attaching error messages to their input fields and then hiding them
 
 const $nameInput = $('#name');
-console.log($nameInput[0]);
+
 $($nameInput).after('<span id="nameSpan" class="tooltip">Please Type Your Name</span>');
 $('#nameSpan').hide();
 
@@ -170,34 +170,34 @@ $('#emailSpan').hide();
 
 
 const $oneActivity = $('.activities');
-$('.register').after('<span id="activity-span">Please Check At Least One Box</span>');
+$('.register').after('<span id="activity-span" class="tooltip">Please Check At Least One Box</span>');
 $('#activity-span').hide();
 
 
 const $creditNumber = $('#cc-num');
-$($creditNumber).after('<span id="credit-span">Credit Card Number Cannot Be Blank</span>');
-$($creditNumber).after('<span id="credit-length">Credit Card Number Must Be 13-16 Digits Long</span>');
+$($creditNumber).after('<span id="credit-span" class="tooltip">Credit Card Number Cannot Be Blank</span>');
+$($creditNumber).after('<span id="credit-length" class="tooltip">Credit Card Number Must Be 13-16 Digits Long</span>');
 $('#credit-span').hide();
 $('#credit-length').hide();
 
 
 const $creditZip = $('#zip');
-$($creditZip).after('<span id="zip-span">Zip Code Cannot Be Blank</span>');
-$($creditZip).after('<span id="zip-length">Zip Code Must Be 5 Digits</span>');
+$($creditZip).after('<span id="zip-span" class="tooltip">Zip Code Cannot Be Blank</span>');
+$($creditZip).after('<span id="zip-length" class="tooltip">Zip Code Must Be 5 Digits</span>');
 $('#zip-span').hide();
 $('#zip-length').hide();
 
 
 const $cvvCode = $('#cvv');
-$($cvvCode).after('<span id="cvv-span">CVV Code Must Be 3 Digits</span>');
-$($cvvCode).after('<span id="cvv-length">CVV Code Must Be 3 Digits</span>');
+$($cvvCode).after('<span id="cvv-span" class="tooltip">CVV Code Cannot Be Blank</span>');
+$($cvvCode).after('<span id="cvv-length" class="tooltip">CVV Code Must Be 3 Digits</span>');
 $('#cvv-span').hide();
 $('#cvv-length').hide();
 
 
-/*
+/***********************************
 Validation functions
-*/
+***********************************/
 
 
 function validName (username) {
@@ -235,22 +235,29 @@ function validActivity (activity) {
 function validCreditNumber (credit) {
   let creditTest = /^\d{13,16}$/.test(credit);
   if (creditTest) {
-    $('#credit-length-span').hide();
+    $('#credit-span').hide();
+    $('#credit-length').hide();
     return true;
+  } else if (credit === "") {
+      $('#credit-span').show();
   } else {
-    $('#credit-length-span').show();
+    $('#credit-span').hide();
+    $('#credit-length').show();
     return false;
   }
-
 }
 
 function validZip (zip) {
   let zipTest = /^\d{5}$/.test(zip);
   if (zipTest) {
-    $('#zip-length-span').hide();
+    $('#zip-length').hide();
+    $('#zip-span').hide();
     return true;
+  } else if (zip === ""){
+    $('#zip-span').show();
   } else {
-    $('#zip-length-span').show();
+    $('#zip-span').hide();
+    $('#zip-length').show();
     return false;
   }
 }
@@ -258,19 +265,47 @@ function validZip (zip) {
 function validCvv (cvv) {
   let cvvTest = /^\d{3}$/.test(cvv);
   if (cvvTest) {
-    $('#cvv-length-span').hide();
+    $('#cvv-span').hide();
+    $('#cvv-length').hide();
     return true;
+  } else if (cvv === "") {
+    $('#cvv-span').show();
   } else {
-    $('#cvv-length-span').show();
+    $('#cvv-span').hide();
+    $('#cvv-length').show();
+    return false;
   }
 }
-/*
-Validation Function Calls
-*/
 
-$($nameInput).focus(function() {
-  validName();
+/************************************
+Validation Function Event Listeners
+************************************/
+
+$nameInput.on('blur', function(event) {
+  validName(event.target.value);
 });
+
+$emailInput.on('blur', function(event) {
+  validEmail(event.target.value);
+});
+
+$oneActivity.on('mouseleave', function(event) {
+  validActivity(event.target.value);
+});
+
+if ($('#payment').val() === "credit card") {
+  console.log("credit validation")
+  $creditNumber.on('blur', function(event){
+    validCreditNumber(event.target.value);
+  });
+  $creditZip.on('blur', function(event){
+    validZip(event.target.value);
+  });
+  $cvvCode.on('blur', function(event){
+    validCvv(event.target.value);
+  });
+}
+
 
 
 //Master Validation function for form submission
@@ -285,23 +320,22 @@ function masterValidator () {
   validZip($creditZip.val()),
   validCvv($cvvCode.val())];
   if ($('#payment').val() === "credit card") {
-    Array.prototype.push.apply(validArray, creditArray);
+    validArray.push(creditArray);
     console.log("payment");
   }
-  for (let i = 0; i <validArray.length; i++) {
-    if (validArray[i]) {
-      return true;
-    } else {
-      return false;
-    }
+  if (validArray.includes(false)) {
+    return false;
+  } else {
+    return true;
   }
 }
 
 
 $('form').submit(function(event){
-  if (masterValidator()) {
-    return;
-  } else {
+  if (!masterValidator()) {
+    console.log("fail");
     event.preventDefault();
+  } else {
+    console.log("success");
   }
 });
