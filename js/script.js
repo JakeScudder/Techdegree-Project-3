@@ -45,7 +45,7 @@ $('#design').on('change', function(event){
   $('#colors-js-puns').show();
   if ($(this).val() === "js puns" ) {
     $("#colors-js-puns option[value='pleaseselect']").remove();
-    $("#colors-js-puns option[value='cornflowerblue']").show();
+    $("#colors-js-puns option[value='cornflowerblue']").show().prop('selected', true);
     $("#colors-js-puns option[value='darkslategrey']").show();
     $("#colors-js-puns option[value='gold']").show();
     $("#colors-js-puns option[value='tomato']").hide();
@@ -54,7 +54,7 @@ $('#design').on('change', function(event){
   }
   if ($(this).val() === "heart js" ) {
     $("#colors-js-puns option[value='pleaseselect']").remove();
-    $("#colors-js-puns option[value='tomato']").show().focus();
+    $("#colors-js-puns option[value='tomato']").show().prop('selected', true);
     $("#colors-js-puns option[value='steelblue']").show();
     $("#colors-js-puns option[value='dimgrey']").show();
     $("#colors-js-puns option[value='cornflowerblue']").hide();
@@ -296,7 +296,6 @@ function masterValidator () {
   }
 }
 
-masterValidator();
 
 $('form').submit(function(event){
   if (masterValidator()) {
