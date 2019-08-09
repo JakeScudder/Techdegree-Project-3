@@ -264,7 +264,7 @@ Validation Function Calls
 */
 
 
-$nameInput[0].addEventListener("input", validName($nameInput.val()));
+$nameInput[0].addEventListener("input", validName());
 
 
 //Non-working validation function for form submission
@@ -277,15 +277,15 @@ function masterValidator () {
   validCreditNumber($creditNumber.val()),
   validZip($creditZip.val()),
   validCvv($cvvCode.val())];
-  $('#payment').on('change', function(event) {
-    if ($(this).val() === "credit card") {
-      Array.prototype.push.apply(validArray, creditArray);
-    } else {
+  if ($('#payment').val() === "credit card") {
+    Array.prototype.push.apply(validArray, creditArray);
+    console.log("payment");
+  }
 
-      return;
-    }
-  });
+
 }
+
+masterValidator();
 
 $('form').submit(function(event){
   if (masterValidator()) {
