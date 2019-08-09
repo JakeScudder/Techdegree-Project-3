@@ -268,8 +268,9 @@ function validCvv (cvv) {
 Validation Function Calls
 */
 
-
-$nameInput[0].addEventListener("input", validName());
+$($nameInput).focus(function() {
+  validName();
+});
 
 
 //Master Validation function for form submission
