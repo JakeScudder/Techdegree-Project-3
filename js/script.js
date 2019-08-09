@@ -287,7 +287,7 @@ $nameInput.on('blur', function(event) {
   validName(event.target.value);
 });
 
-$emailInput.on('blur', function(event) {
+$emailInput.on('keypress blur', function(event) {
   validEmail(event.target.value);
 });
 
@@ -297,13 +297,13 @@ $oneActivity.on('mouseleave', function(event) {
 
 if ($('#payment').val() === "credit card") {
   console.log("credit validation")
-  $creditNumber.on('blur', function(event){
+  $creditNumber.on('keyup blur', function(event){
     validCreditNumber(event.target.value);
   });
-  $creditZip.on('blur', function(event){
+  $creditZip.on('keyup blur', function(event){
     validZip(event.target.value);
   });
-  $cvvCode.on('blur', function(event){
+  $cvvCode.on('keyup blur', function(event){
     validCvv(event.target.value);
   });
 }
