@@ -197,6 +197,7 @@ Validation functions
 
 function validName (username) {
   if (username !== "") {
+    $('#nameSpan').hide();
     return true;
   } else {
     $('#nameSpan').show();
@@ -208,6 +209,7 @@ function validName (username) {
 function validEmail (email) {
   let testEmail = /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
   if (testEmail) {
+    $('#emailSpan').hide();
     return true;
   } else {
     $('#emailSpan').show();
@@ -217,6 +219,7 @@ function validEmail (email) {
 
 function validActivity (activity) {
   if (grandTotal !== 0) {
+    $('#activity-span').hide();
     return true;
   } else {
     $('#activity-span').show();
@@ -227,6 +230,7 @@ function validActivity (activity) {
 function validCreditNumber (credit) {
   let creditTest = /^\d{13,16}$/.test(credit);
   if (creditTest) {
+    $('#credit-length-span').hide();
     return true;
   } else {
     $('#credit-length-span').show();
@@ -237,7 +241,8 @@ function validCreditNumber (credit) {
 
 function validZip (zip) {
   let zipTest = /^\d{5}$/.test(zip);
-  if (validZip()) {
+  if (zipTest) {
+    $('#zip-length-span').hide();
     return true;
   } else {
     $('#zip-length-span').show();
@@ -248,6 +253,7 @@ function validZip (zip) {
 function validCvv (cvv) {
   let cvvTest = /^\d{3}$/.test(cvv);
   if (cvvTest) {
+    $('#cvv-length-span').hide();
     return true;
   } else {
     $('#cvv-length-span').show();
