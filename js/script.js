@@ -10,6 +10,7 @@ Web page loads with focus on the Name input field
 Initially hides:
   Other Job Role Text Field
   Colors Select Options
+  Other payment options
 */
 $(document).ready(function() {
   $('#name').focus();
@@ -19,8 +20,8 @@ $(document).ready(function() {
   $("#bitcoinDiv").hide();
 });
 
-/*Javascript to show other Job Role text input when selected, or rehide it if it is de-selected.
-Code adapted from https://stackoverflow.com/questions/15566999/how-to-show-form-input-fields-based-on-select-value
+/*
+Javascript to show other Job Role text input when selected, or rehide it if it is de-selected.
 */
 $('#title').on('change', function(event){
   if ($(this).val() === "other") {
@@ -33,7 +34,7 @@ $('#title').on('change', function(event){
 });
 
 /*
-Highlight T-shirt color options based on which T-shirt style is selected.
+Show or Hide T-shirt color options based on which T-shirt style is selected.
 Code adapted from:
 https://www.websparrow.org/web/add-and-remove-options-in-select-using-jquery
 
@@ -82,7 +83,6 @@ let grandTotal = 0;
 //Append Total Cost to the bottom of the checkbox fieldset
 $('.activities').append('<span id="total-cost">Total Cost: <span>');
 
-
 /*
 Activities Checkboxes
 Retrieving the cost attribute and adding them together to get the Grand Total
@@ -100,11 +100,11 @@ $('.activities input[type=checkbox]').change(function(event){
   $('#total-cost').text("Total Cost: $").append(grandTotal);
 
   /*
-    Retrieve the day and time of the checked checkedActivityTime
-    Run a for loop through the inputs in the activities Section
-    Check to see that the loop time is equal to the checked activity time and also if input being checked is not the same as the element in the for loop:
-      Then the element in the for loop is disabled.
-      When the box is unchecked, the input is enabled once more.
+  Retrieve the day and time of the checked checkedActivityTime
+  Run a for loop through the inputs in the activities Section
+  Check to see that the loop time is equal to the checked activity time and also if input being checked is not the same as the element in the for loop:
+    Then the element in the for loop is disabled.
+    When the box is unchecked, the input is enabled once more.
   */
   let checkedActivityTime = $(this).attr("data-day-and-time");
   let actSection = $('.activities label input')
@@ -129,11 +129,7 @@ $("#payment option[value='select method']").remove();
 
 
 $('#payment').on('change', function(event) {
-  if ($(this).val() === "select method") {
-    $("#credit-card").show();
-    $("#paypalDiv").hide();
-    $("#bitcoinDiv").hide();
-  }
+
   if ($(this).val() === "credit card") {
     $("#credit-card").show();
     $("#paypalDiv").hide()
@@ -232,6 +228,8 @@ function validActivity (activity) {
   }
 }
 
+//Credit functions are evaluating if the field is true,left blank, or if it does not fulfill the necessary requirements
+
 function validCreditNumber (credit) {
   let creditTest = /^\d{13,16}$/.test(credit);
   if (creditTest) {
@@ -240,6 +238,7 @@ function validCreditNumber (credit) {
     return true;
   } else if (credit === "") {
       $('#credit-span').show();
+      $('#credit-length').hide();
   } else {
     $('#credit-span').hide();
     $('#credit-length').show();
@@ -255,6 +254,7 @@ function validZip (zip) {
     return true;
   } else if (zip === ""){
     $('#zip-span').show();
+    $('#zip-length').hide();
   } else {
     $('#zip-span').hide();
     $('#zip-length').show();
@@ -270,6 +270,7 @@ function validCvv (cvv) {
     return true;
   } else if (cvv === "") {
     $('#cvv-span').show();
+    $('#cvv-length').hide();
   } else {
     $('#cvv-span').hide();
     $('#cvv-length').show();
@@ -280,6 +281,7 @@ function validCvv (cvv) {
 /************************************
 Validation Function Event Listeners
 ************************************/
+//Most error messages are set to when the input field loses focus
 
 $nameInput.on('blur', function(event) {
   validName(event.target.value);
@@ -308,8 +310,11 @@ if ($('#payment').val() === "credit card") {
 
 
 
-//Master Validation function for form submission
-
+/*
+Master Validation function to be evaluated on form submission
+It evaluates on the first 3 validations, then evaluates the credit card evaluations if that is the option selected.
+All the validations are combined into an array and if that array includes a false value then the masterValidator will return false.
+*/
 function masterValidator () {
   let validArray = [
   validName($nameInput.val()),
@@ -330,7 +335,10 @@ function masterValidator () {
   }
 }
 
-
+/*
+Final form submit:
+When the submit button is pressed, masterValidator must resolve to true, otherwise the form will not submit and the error messages are displayed
+*/
 $('form').submit(function(event){
   if (!masterValidator()) {
     console.log("fail");

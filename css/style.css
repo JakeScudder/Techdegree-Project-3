@@ -41,6 +41,11 @@ a {
   box-sizing: border-box;
 }
 
+.tooltip {
+  color: #f3ac00;
+  font-family: "Times New Roman", Times, serif;
+}
+
 
 
 
