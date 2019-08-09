@@ -38,9 +38,13 @@ Code adapted from:
 https://www.websparrow.org/web/add-and-remove-options-in-select-using-jquery
 
 */
+
+$("#colors-js-puns option[value='select method']").hide();
+
 $('#design').on('change', function(event){
   $('#colors-js-puns').show();
   if ($(this).val() === "js puns" ) {
+    $("#colors-js-puns option[value='pleaseselect']").remove();
     $("#colors-js-puns option[value='cornflowerblue']").show();
     $("#colors-js-puns option[value='darkslategrey']").show();
     $("#colors-js-puns option[value='gold']").show();
@@ -49,7 +53,8 @@ $('#design').on('change', function(event){
     $("#colors-js-puns option[value='dimgrey']").hide();
   }
   if ($(this).val() === "heart js" ) {
-    $("#colors-js-puns option[value='tomato']").show();
+    $("#colors-js-puns option[value='pleaseselect']").remove();
+    $("#colors-js-puns option[value='tomato']").show().focus();
     $("#colors-js-puns option[value='steelblue']").show();
     $("#colors-js-puns option[value='dimgrey']").show();
     $("#colors-js-puns option[value='cornflowerblue']").hide();
@@ -267,7 +272,8 @@ Validation Function Calls
 $nameInput[0].addEventListener("input", validName());
 
 
-//Non-working validation function for form submission
+//Master Validation function for form submission
+
 function masterValidator () {
   let validArray = [
   validName($nameInput.val()),
@@ -281,8 +287,13 @@ function masterValidator () {
     Array.prototype.push.apply(validArray, creditArray);
     console.log("payment");
   }
-
-
+  for (let i = 0; i <validArray.length; i++) {
+    if (validArray[i]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 masterValidator();
