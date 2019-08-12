@@ -100,7 +100,7 @@ $('.activities input[type=checkbox]').change(function(event){
   $('#total-cost').text("Total Cost: $").append(grandTotal);
 
   /*
-  Retrieve the day and time of the checked checkedActivityTime
+  Retrieve the day and time of the checked activity time
   Run a for loop through the inputs in the activities Section
   Check to see that the loop time is equal to the checked activity time and also if input being checked is not the same as the element in the for loop:
     Then the element in the for loop is disabled.
@@ -239,6 +239,7 @@ function validCreditNumber (credit) {
   } else if (credit === "") {
       $('#credit-span').show();
       $('#credit-length').hide();
+      return false;
   } else {
     $('#credit-span').hide();
     $('#credit-length').show();
@@ -255,6 +256,7 @@ function validZip (zip) {
   } else if (zip === ""){
     $('#zip-span').show();
     $('#zip-length').hide();
+    return false;
   } else {
     $('#zip-span').hide();
     $('#zip-length').show();
@@ -271,6 +273,7 @@ function validCvv (cvv) {
   } else if (cvv === "") {
     $('#cvv-span').show();
     $('#cvv-length').hide();
+    return false;
   } else {
     $('#cvv-span').hide();
     $('#cvv-length').show();
@@ -296,7 +299,6 @@ $oneActivity.on('mouseleave', function(event) {
 });
 
 if ($('#payment').val() === "credit card") {
-  console.log("credit validation")
   $creditNumber.on('keyup blur', function(event){
     validCreditNumber(event.target.value);
   });
@@ -312,7 +314,7 @@ if ($('#payment').val() === "credit card") {
 
 /*
 Master Validation function to be evaluated on form submission
-It evaluates on the first 3 validations, then evaluates the credit card evaluations if that is the option selected.
+It checks the first 3 validations, then evaluates the credit card evaluations if that is the option selected.
 All the validations are combined into an array and if that array includes a false value then the masterValidator will return false.
 */
 function masterValidator () {
@@ -325,8 +327,8 @@ function masterValidator () {
   validZip($creditZip.val()),
   validCvv($cvvCode.val())];
   if ($('#payment').val() === "credit card") {
-    validArray.push(creditArray);
-    console.log("payment");
+    Array.prototype.push.apply(validArray, creditArray);
+    console.log("needs validation");
   }
   if (validArray.includes(false)) {
     return false;
