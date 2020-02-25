@@ -1,7 +1,7 @@
 <div align="center">
 
 ## Interactive Form
-### Basic form functionality
+### Basic Form Functionality
 
 </div>
 
